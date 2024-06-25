@@ -1,31 +1,51 @@
-FROM node:latest
+# Stage 1: Build Angular App
+
+FROM node:14 AS build
  
-# Set the working directory inside the container
+# Set the working directory
+
 WORKDIR /app
  
-# Install the Angular CLI globally
-#RUN npm install -g @angular/cli
+# Install Angular CLI
+
+RUN npm install -g @angular/cli
  
-# Copy package.json and package-lock.json files to the container
+# Copy package.json and package-lock.json to the working directory
+
 COPY package*.json ./
  
-# Install the project dependencies
-RUN npm install -g npm
-RUN npm cache clean --force
-RUN npm update
+# Install dependencies
+
 RUN npm install
  
-# Copy the entire Angular project to the container
+# Copy the rest of the application files
+
 COPY . .
  
-# Build the Angular project
-#RUN ng build --prod
-RUN ng build --configuration=production
- 
- 
-# Expose port 4200
-EXPOSE 4200
- 
-# Serve the Angular application using the built-in Angular CLI server
-CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "4200", "--disable-host-check"]
+# Build the Angular application
 
+RUN npm run build --prod
+ 
+# Stage 2: Serve App with Node.js
+
+FROM node:14
+ 
+# Set the working directory
+
+WORKDIR /app
+ 
+# Install serve globally to serve the Angular app
+
+RUN npm install -g serve
+ 
+# Copy the build output from the previous stage
+
+COPY --from=build /app/dist /app
+ 
+# Expose the port the app runs on
+
+EXPOSE 80
+ 
+# Start the application
+
+CMD ["serve", "-s", "your-angular-app", "-l", "80"]
