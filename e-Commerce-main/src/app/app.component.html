@@ -1,0 +1,46 @@
+<header>
+ 
+  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom border-top ">
+    <div class="container">
+      <a class="navbar-brand fs-2 fw-bold " href="#"><i class="fa fa-cart-shopping fs-2"
+          style="color: #f54242;"></i><span class="textBlur">ShopCart</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+   
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Nav Items -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0  text-center ">
+          <li class="nav-item">
+            <a class="nav-link fw-semibold text-uppercase text-black  me-1" href="#">Products</a>
+          </li>
+           
+          <li class="nav-item">
+            <a class="nav-link fw-semibold text-uppercase text-black  me-1" href="#">Contact us</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle cart fw-semibold text-uppercase text-black  me-1" href="#"
+              id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa fa-cart-shopping fs-5" style="color: #202122;"></i>
+              <span class="position-absolute  translate-middle badge rounded-pill bg-danger">
+               {{cartItems.length}}
+                <span class="visually-hidden">unread messages</span>
+              </span>
+            </a>
+            <button class="btn btn-sm btn-success" (click)="redirectToSale()">Checkout</button>
+          </li> 
+        </ul> 
+      </div>
+    </div>
+  </nav>
+  
+</header>
+
+<router-outlet></router-outlet>
+<footer class="footer">
+  <div class="container">
+    <p>&copy; 2024 E-Commerce. All rights reserved</p>
+  </div>
+</footer>
+ 

@@ -1,0 +1,30 @@
+<div class="filter-container">
+    <select (change)="onCategoryChange($event)">
+      <option value="">All Categories</option>
+      <option value="Electronics">Electronics</option>
+      <option value="Mens">Mens</option>
+      <option value="Womens">Womens</option>
+      <!-- Add more categories as needed -->
+    </select>
+    <input type="text" placeholder="Search..." (input)="onSearchChange($event)" />
+    <select (change)="onPriceConditionChange($event)">
+      <option value="">Select Price Condition</option>
+      <option value="under">Under</option>
+      <option value="lessThan">Less Than</option>
+      <option value="moreThan">More Than</option>
+    </select>
+    <input type="number" placeholder="Price" (input)="onPriceValueChange($event)" />
+    <button (click)="applyFilters()">Apply Filters</button>
+  </div>
+   
+  <div class="product-list">
+    <div class="product-card" *ngFor="let product of products">
+      <img [src]="product.productImage" alt="{{ product.productName }}">
+      <div class="product-details">
+        <h2>{{ product.productName }}</h2>
+        <p>{{ product.productDescription }}</p>
+        <p class="price">{{ product.productPrice }}</p>
+        <button (click)="addToCart(product.productId)">Add to Cart</button>
+      </div>
+    </div>
+  </div>

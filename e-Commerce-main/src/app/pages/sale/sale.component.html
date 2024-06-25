@@ -1,0 +1,29 @@
+<div class="container">
+  <h1>Cart Items</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Actions</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of cartItems">
+        <td>{{ item.cartId }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.quantity }}</td>
+        <td><button (click)="removeFromCart(item.cartId)">Remove</button></td>
+      </tr>
+    </tbody>
+
+  </table>
+  
+  <h1>Total Items:{{totalItems}}</h1>
+  <h1>Total Price:{{totalPrice}}</h1>
+  <button (click)="proceedToConfirmOrder()">Proceed to Confirm Order</button>
+</div>
