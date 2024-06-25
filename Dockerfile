@@ -12,7 +12,7 @@ RUN npm install -g @angular/cli
  
 # Copy package.json and package-lock.json to the working directory
 
-COPY package*.json ./
+COPY backend/package*.json ./
  
 # Install dependencies
 
