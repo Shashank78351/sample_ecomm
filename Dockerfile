@@ -4,13 +4,16 @@ FROM node:latest
 WORKDIR /app
  
 # Install the Angular CLI globally
-RUN npm install -g @angular/cli
+#RUN npm install -g @angular/cli
  
 # Copy package.json and package-lock.json files to the container
 COPY package*.json ./
  
 # Install the project dependencies
-RUN npm i -s express nodemon
+RUN npm install -g npm
+RUN npm cache clean --force
+RUN npm update
+RUN npm install
  
 # Copy the entire Angular project to the container
 COPY . .
