@@ -40,7 +40,7 @@ RUN npm install -g serve
  
 # Copy the build output from the previous stage
 
-COPY --from=build /app/dist /app
+COPY --from=build /app/dist/backend /app
  
 # Expose the port the app runs on
 
@@ -48,4 +48,4 @@ EXPOSE 80
  
 # Start the application
 
-CMD ["serve", "-s", "your-angular-app", "-l", "80"]
+CMD ["serve", "-s", "backend", "-l", "80"]
