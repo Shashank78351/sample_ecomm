@@ -10,7 +10,7 @@ RUN npm install -g @angular/cli
 COPY package*.json ./
  
 # Install the project dependencies
-RUN npm install
+npm i -s express nodemon
  
 # Copy the entire Angular project to the container
 COPY . .
