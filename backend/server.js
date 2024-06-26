@@ -1,13 +1,64 @@
 const express = require('express');
 const cors = require('cors');
+const bcrypt=require('bcrypt');
+const jwt=require('jsonwebtoken');
 const db = require('./db');
+const bodyParser = require('body-parser');
 const app = express();
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3004;
 
 // Route to get product list
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.json());
 
+// Secret key for JWT
+const JWT_SECRET = 'Ks@#2024';
+ 
+// User registration
+app.post('/signup', async (req, res) => {
+    const { username, email, password } = req.body;
+    
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        db.query('INSERT INTO users (username, email, password) VALUES (?, ?, ?)', [username, email, hashedPassword], (error, results) => {
+            if (error) {
+                console.error('Database query error:', error);
+                return res.status(500).json({ message: 'Server error' });
+            }
+            res.status(201).json({ message: 'User registered successfully' });
+        });
+    } catch (error) {
+        console.error('Error during registration:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+ 
+// User login
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+    
+    db.query('SELECT * FROM users WHERE email = ?', [email], async (error, results) => {
+        if (error) {
+            console.error('Database query error:', error);
+            return res.status(500).json({ message: 'Server error' });
+        }
+        
+        if (results.length === 0) {
+            return res.status(401).json({ message: 'Invalid email or password' });
+        }
+ 
+        const user = results[0];
+        const match = await bcrypt.compare(password, user.password);
+ 
+        if (!match) {
+            return res.status(401).json({ message: 'Invalid email or password' });
+        }
+ 
+        const token = jwt.sign({ userId: user.userId, username: user.username }, JWT_SECRET, { expiresIn: '1h' });
+        res.status(200).json({ token });
+    });
+});
 app.get('/products', (req, res) => {
   const { search, category, priceCondition, priceValue } = req.query;
 
