@@ -5,7 +5,7 @@ const jwt=require('jsonwebtoken');
 const db = require('./db');
 const bodyParser = require('body-parser');
 const app = express();
-const PORT = process.env.PORT || 3004;
+const PORT = process.env.PORT || 3002;
 
 // Route to get product list
 app.use(cors());
