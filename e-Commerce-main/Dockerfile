@@ -29,7 +29,7 @@ WORKDIR /app
 RUN npm install -g http-server
 
 # Copy the build output from the previous stage
-COPY --from=build /app/dist/backend /app
+COPY --from=build /app/dist/ecommerce /app
 
 # Expose the port the app runs on
 EXPOSE 80
