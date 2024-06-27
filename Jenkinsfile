@@ -14,8 +14,14 @@ pipeline {
         {
             steps
             {
+                dir("backend"){
+                    sh '''
+                    docker build -t backend .
+                    '''
+                }
                 sh '''
-                docker build -t e-comm-app .
+                cd e-Commerce-main
+                docker build -t frontend .
                 '''
             }
         }
