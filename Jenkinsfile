@@ -32,7 +32,7 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'gitlab', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                         sh """
-                            docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+                            docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD} linuxappvm.eastus.cloudapp.azure.com:5050
                             docker push linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:latest
                             docker push linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:latest
                         
