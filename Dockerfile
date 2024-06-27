@@ -7,14 +7,11 @@ WORKDIR /app
 # Install Angular CLI globally
 RUN npm install -g @angular/cli
 
-# Copy package.json and package-lock.json to the working directory
-COPY . .
+# Copy the rest of the application files
+COPY ./backend .
 
 # Install dependencies
 RUN npm install
-
-# Copy the rest of the application files
-COPY ./backend .
 
 # Build the Angular application
 RUN npm run build --configuration=production
