@@ -16,15 +16,32 @@ pipeline {
             {
                 dir("backend"){
                     sh '''
-                    docker build -t backend .
+                    docker build -t linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:latest .
                     '''
                 }
                 sh '''
                 cd e-Commerce-main
-                docker build -t frontend .
+                docker build -t linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:latest .
                 '''
             }
         }
+
+        stage('Publish')
+        {
+            steps{
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'gitlab', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh """
+                            docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+                            docker push linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:latest
+                            docker push linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:latest
+                        
+                        """
+                    }
+                }
+            }
+        }
+
         
         stage('Deploy') 
         {
