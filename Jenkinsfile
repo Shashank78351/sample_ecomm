@@ -16,12 +16,12 @@ pipeline {
             {
                 dir("backend"){
                     sh '''
-                    docker build -t linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend .
+                    docker build -t linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:latest .
                     '''
                 }
                 sh '''
                 cd e-Commerce-main
-                docker build -t linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend .
+                docker build -t linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:latest .
                 '''
             }
         }
@@ -33,8 +33,8 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'gitlab', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                         sh """
                             docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD} linuxappvm.eastus.cloudapp.azure.com:5050
-                            docker tag linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:${env.BUILD_NUMBER} linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:latest
-                            docker tag linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:${env.BUILD_NUMBER} linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:latest
+                            docker tag linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:latest linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:${env.BUILD_NUMBER} 
+                            docker tag linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:latest linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:${env.BUILD_NUMBER}
                             docker push --all-tags linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend
                             docker push --all-tags linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend
                         
