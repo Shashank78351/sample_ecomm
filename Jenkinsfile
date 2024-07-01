@@ -33,8 +33,10 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'gitlab', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                         sh """
                             docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD} linuxappvm.eastus.cloudapp.azure.com:5050
-                            docker push linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:latest
-                            docker push linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:latest
+                            docker image tag linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:${env.BUILD_NUMBER}
+                            docker image tag linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:${env.BUILD_NUMBER}
+                            docker push --all-tags linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend
+                            docker push --all-tags linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend
                         
                         """
                     }
