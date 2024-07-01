@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: ecommerce
-  name: e-Commercebackend-deployment
+  name: backenddeployment
   labels:
     app: e-Comm
 spec:
