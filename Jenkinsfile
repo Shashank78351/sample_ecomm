@@ -51,9 +51,9 @@ pipeline {
             {
                 sh '''
                 cd backend
-                kubectl apply -f deployment.yaml --kubeconfig /home/Linux/.kube/config
-                kubectl apply -f service.yaml --kubeconfig /home/Linux/.kube/config
-                kubectl apply -f secret.yaml --kubeconfig /home/Linux/.kube/config
+                kubectl apply -f deployment.yaml 
+                kubectl apply -f service.yaml 
+                kubectl apply -f secret.yaml 
                 '''
             }
         }
