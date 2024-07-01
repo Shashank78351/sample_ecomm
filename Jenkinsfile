@@ -50,7 +50,7 @@ pipeline {
             steps
             {
                 sh '''
-                cd backend
+                cd backend/kube-backend
                 kubectl apply -f deployment.yml 
                 kubectl apply -f service.yml 
                 kubectl apply -f secret.yml 
