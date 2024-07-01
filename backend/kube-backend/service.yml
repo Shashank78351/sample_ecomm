@@ -4,10 +4,10 @@ metadata:
   namespace: ecommerce
   name: e-commerceservice
   labels:
-    app: e-Comm
+    app: e-comm
 spec:
   selector:
-    app: e-Comm
+    app: e-comm
   ports:
     - name: e-commerceservice
       protocol: TCP
