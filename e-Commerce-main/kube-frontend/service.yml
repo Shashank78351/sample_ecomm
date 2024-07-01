@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: e-Commerce
+  namespace: e-commerce
   name: e-commerceservice
   labels:
-    app: e-Comm
+    app: e-comm
 spec:
   selector:
-    app: e-Comm
+    app: e-comm
   ports:
     - name: e-commerceservice
       protocol: TCP
