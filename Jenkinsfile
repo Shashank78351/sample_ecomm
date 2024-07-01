@@ -16,12 +16,12 @@ pipeline {
             {
                 dir("backend"){
                     sh '''
-                    docker build -t linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:latest .
+                    docker build -t linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend .
                     '''
                 }
                 sh '''
                 cd e-Commerce-main
-                docker build -t linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:latest .
+                docker build -t linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend .
                 '''
             }
         }
