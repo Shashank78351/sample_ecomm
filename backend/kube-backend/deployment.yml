@@ -20,7 +20,7 @@ spec:
         - name: e-Comm
           image: linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:38
           ports:
-            - containerPort: 80
+            - containerPort: 3002
           imagePullPolicy: Always
       imagePullSecrets:
         - name: my-secret
