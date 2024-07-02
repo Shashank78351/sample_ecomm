@@ -24,4 +24,3 @@ spec:
           imagePullPolicy: Always
       imagePullSecrets:
         - name: my-secret
-
