@@ -50,12 +50,15 @@ pipeline {
             steps
             {
                 sh '''
+                BUILD_NUMBER=${env.BUILD_NUMBER}
                 cd backend/kube-backend
+                sed -i "s/imagetag/$BUILD_NUMBER/g" deployment.yml
                 kubectl apply -f deployment.yml 
                 kubectl apply -f service.yml 
                 kubectl apply -f secret.yml 
-
+                
                 cd ../../e-Commerce-main/kube-frontend
+                sed -i "s/imagetag/$BUILD_NUMBER/g" deployment.yml
                 kubectl apply -f deployment.yml 
                 kubectl apply -f service.yml 
                 kubectl apply -f secret.yml 
