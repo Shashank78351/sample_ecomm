@@ -15,7 +15,6 @@ export class UserOrdersComponent implements OnInit {
  
   ngOnInit(): void {
     const email = localStorage.getItem('email');
-    const username=localStorage.getItem('username');
  
     if (!email ) {
       alert('No User found. Please login again.');
