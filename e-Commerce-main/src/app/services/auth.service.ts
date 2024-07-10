@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-private apiUrl = 'http://localhost:3002/'; // Adjust the URL as per your backend setup
+private apiUrl = 'http://localhost:3002/';
  
   constructor(private http: HttpClient) { }
  
@@ -14,17 +14,7 @@ private apiUrl = 'http://localhost:3002/'; // Adjust the URL as per your backend
 return this.http.post(`http://localhost:3002/signup`, { username, email, password });
   }
  
-  login(email: string, password: string): Observable<any> {
-return this.http.post(`http://localhost:3002/login`, { email, password });
+  login(username: string,email:string, password: string): Observable<any> {
+return this.http.post(`http://localhost:3002/login`, { username,email, password });
   }
- 
-  // To store the token in local storage
-  // setToken(token: string): void {
-  //   localStorage.setItem('token', token);
-  // }
- 
-  // // To get the token from local storage
-  // getToken(): string | null {
-  //   return localStorage.getItem('token');
-  // }
 }

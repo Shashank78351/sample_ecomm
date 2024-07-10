@@ -16,6 +16,7 @@ export class SaleComponent implements OnInit {
   cartItems: Product[] = [];
   totalItems:Number=0;
   totalPrice:Number=0;
+  total:Number=0;
 
   constructor(private productService:ProductService, private router:Router) { }
  
@@ -33,8 +34,9 @@ export class SaleComponent implements OnInit {
   
   calculateTotals():void {
     this.totalItems=this.cartItems.length;
-    this.totalPrice=this.cartItems.reduce((acc,item)=>acc + (item.quantity * item.price), 0);
+    this.totalPrice=this.cartItems.reduce((acc,item)=>acc + (item.quantity * item.price), 0); 
   }
+  
   removeFromCart(cartId: number): void {
     this.productService.removeFromCart(cartId).subscribe(
       (response) => {
@@ -48,7 +50,7 @@ export class SaleComponent implements OnInit {
     );
   }
   proceedToConfirmOrder():void{
-    this.router.navigate(['/confirm-order']);
+    this.router.navigate(['/confirmOrder']);
   }
  
 }

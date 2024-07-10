@@ -9,4 +9,6 @@ export interface Product {
     name:string;
     price:number;
     orderId:number;
+    userId:number;
+    total:number;
    }

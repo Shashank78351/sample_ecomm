@@ -21,7 +21,7 @@ export class SignupComponent {
       return;
     }
  
-this.authService.signup(this.username, this.email, this.password).subscribe(
+    this.authService.signup(this.username, this.email, this.password).subscribe(
       () => {
         alert('User registered successfully');
         this.router.navigate(['/login']);

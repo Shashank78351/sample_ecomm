@@ -14,12 +14,11 @@ products:Product[] = [];
 cart:Product[]=[];
 cartItems:Product[]=[];
 search: string = '';
-  category: string = '';
-  priceCondition: string = '';
-  priceValue: number | null = null;
+category: string = '';
+priceCondition: string = '';
+priceValue: number | null = null;
 
 constructor(private productService:ProductService, private router:Router){}
-
  
 ngOnInit() {
     console.log("4040");
@@ -27,11 +26,9 @@ ngOnInit() {
       this.products=products;
     });
     this.getProducts();
-     //this.loadProducts();
   }
  
-  loadProducts() {
-    
+  loadProducts() {  
     this.productService.getProducts().subscribe((data: Product[]) => {
       this.products = data;
     });
@@ -40,8 +37,7 @@ ngOnInit() {
   addToCart(productId: number) {
     console.log("56 line", productId);
     this.productService.addToCart(productId).subscribe((data: Product[]) => {
-      this.cartItems = data;
-      
+      this.cartItems = data;  
     }); 
   }
   getProducts(): void {
@@ -75,9 +71,13 @@ ngOnInit() {
   applyFilters() {
     this.getProducts();
   }
-  
-  
-
+  logout(){
+    localStorage.removeItem('username');
+    this.router.navigateByUrl('/login');
+  }
+  viewOrders():void{
+    this.router.navigateByUrl('/orders');
+  }
 }
 
   

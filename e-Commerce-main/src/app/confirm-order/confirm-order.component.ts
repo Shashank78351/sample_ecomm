@@ -3,7 +3,6 @@ import { ProductService } from '../services/product.service';
 import { Product } from '../product-list/product.model';
 import { Router } from '@angular/router';
 
- 
 @Component({
   selector: 'app-confirm-order',
   templateUrl: './confirm-order.component.html',
@@ -35,9 +34,18 @@ export class ConfirmOrderComponent implements OnInit {
   }
  
   confirmOrder(): void {
-    this.productService.confirmOrder().subscribe(
+    const username=localStorage.getItem('username');
+    const email=localStorage.getItem('email');
+    if (!username || !email){
+      alert('No User found')
+      return ;
+    }
+    this.productService.confirmOrder({ username,email }).subscribe(
       (response) => {
         console.log('Order confirmed:', response);
+        
+        localStorage.getItem('username');
+        localStorage.getItem('email');
         alert('Order confirmed successfully!');
         this.router.navigate(['/products']);
       },
@@ -45,6 +53,6 @@ export class ConfirmOrderComponent implements OnInit {
         console.error('Error confirming order:', error);
         alert('Error confirming order. Please try again.');
       }
-    );
+    ); 
   }
 }

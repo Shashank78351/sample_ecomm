@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from './services/product.service';
 import { Router } from '@angular/router';
+import { ProductService } from './services/product.service';
 import { Product } from './product-list/product.model';
-
+ 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,13 +11,19 @@ import { Product } from './product-list/product.model';
 export class AppComponent implements OnInit {
   title = 'ecommerce';
   cartItems: Product[] = [];
-  products:Product[] = [];
-  
-  constructor(private router: Router) {
+ 
+  constructor(private router: Router, private productService: ProductService) {}
+ 
+  ngOnInit(): void {
+    // Subscribe to cart items observable
+    this.productService.cartItems$.subscribe(items => {
+      this.cartItems = items;
+    });
+ 
+    // Fetch initial cart items
+    this.productService.fetchCartItems();
   }
-
-  ngOnInit(): void {}
-
+ 
   redirectToSale() {
     this.router.navigateByUrl("/sale");
   }

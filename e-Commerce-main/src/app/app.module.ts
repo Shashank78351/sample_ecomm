@@ -9,7 +9,10 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { ConfirmOrderComponent } from './confirm-order/confirm-order.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
-
+import { UserOrdersComponent } from './user-orders/user-orders.component';
+import { registerLocaleData } from '@angular/common';
+import localeHi from '@angular/common/locales/hi';
+registerLocaleData(localeHi,'hi');
 
 
 @NgModule({
@@ -19,8 +22,8 @@ import { LoginComponent } from './login/login.component';
     ProductListComponent,
     ConfirmOrderComponent,
     SignupComponent,
-    LoginComponent
-    
+    LoginComponent,
+    UserOrdersComponent 
   ],
   imports: [
     BrowserModule,

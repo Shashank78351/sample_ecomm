@@ -1,0 +1,58 @@
+.orders-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+   
+  h2 {
+    text-align: center;
+    color: #007bff;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+   
+  .orders-list {
+    list-style-type: none;
+    padding: 0;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+    
+  }
+   
+  .order-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 10px 0;
+    padding: 15px;
+    transition: box-shadow 0.3s ease;
+    
+  }
+   
+  .order-item:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+   
+  .order-details h3 {
+    margin: 0 0 10px;
+    color: #007bff;
+    
+  }
+   
+  .order-details p {
+    margin: 5px 0;
+    color: #555;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+  }
+   
+  p {
+    font-size: 14px;
+  }
+   
+  .ng-template p {
+    text-align: center;
+    color: #777;
+  }
