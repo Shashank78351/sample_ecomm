@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || 3002;
 
-// Route to get product list
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
@@ -36,16 +35,16 @@ app.post('/signup', async (req, res) => {
  
 // User login
 app.post('/login', (req, res) => {
-    const { email, password } = req.body;
+    const { username,email, password } = req.body;
     
-    db.query('SELECT * FROM users WHERE email = ?', [email], async (error, results) => {
+    db.query('SELECT * FROM users WHERE username = ?', [username], async (error, results) => {
         if (error) {
             console.error('Database query error:', error);
             return res.status(500).json({ message: 'Server error' });
         }
         
         if (results.length === 0) {
-            return res.status(401).json({ message: 'Invalid email or password' });
+            return res.status(401).json({ message: 'Invalid username or password' });
         }
  
         const user = results[0];
@@ -192,6 +191,9 @@ app.delete('/removeFromCart/:cartId', (req, res) => {
   });
 });
 app.post('/confirmOrder', (req, res) => {
+    
+    const username=req.body.username;
+    const email=req.body.email;
   db.query('SELECT * FROM cart', (error, cartItems) => {
       if (error) {
           console.error('Database query error:', error);
@@ -203,10 +205,12 @@ app.post('/confirmOrder', (req, res) => {
       }
 
       const orderId = new Date().getTime(); // Generate a unique order ID
+    //   const email=req.body.email;
+      
       // Insert each cart item into the orders table
       cartItems.forEach(item => {
-          db.query('INSERT INTO orders (orderId, name, price, quantity) VALUES (?, ?, ?, ?)',
-[orderId, item.name, item.price, item.quantity], (err, result) => {
+          db.query('INSERT INTO orders (orderId, name, price, quantity,email,username) VALUES (?, ?, ?, ?, ?,?)',
+[orderId, item.name, item.price, item.quantity,email,username], (err, result) => {
               if (err) {
                   console.error('Insert order query error:', err);
               }
@@ -224,6 +228,22 @@ app.post('/confirmOrder', (req, res) => {
       });
   });
 });
+app.get('/orders', (req, res) => {
+    const email = req.query.email; // Get the email from query parameters
+     
+        if (!email) {
+            return res.status(400).json({ message: 'Email is required' });
+        }
+     
+        db.query('SELECT * FROM orders WHERE email = ?', [email], (error, orders) => {
+            if (error) {
+                console.error('Database query error:', error);
+                return res.status(500).json({ message: 'Server error' });
+            }
+     
+            res.status(200).json(orders);
+        });
+    });
 app.listen(PORT, () => {
 
   console.log(`Server is running on port ${PORT}`);
