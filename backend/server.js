@@ -1,7 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const bcrypt=require('bcrypt');
-const jwt=require('jsonwebtoken');
 const db = require('./db');
 const bodyParser = require('body-parser');
 const app = express();
@@ -9,10 +7,7 @@ const PORT = process.env.PORT || 3002;
 
 app.use(cors());
 app.use(express.json());
-app.use(bodyParser.json());
 
-// Secret key for JWT
-const JWT_SECRET = 'Ks@#2024';
  
 // User registration
 app.post('/signup', async (req, res) => {
