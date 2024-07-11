@@ -4,10 +4,13 @@ const db = require('./db');
 const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || 3002;
+const bcrypt=require('bcrypt');
+const jwt=require('jsonwebtoken');
 
 app.use(cors());
 app.use(express.json());
 
+const JWT_SECRET ="ks@#2024";
  
 // User registration
 app.post('/signup', async (req, res) => {
