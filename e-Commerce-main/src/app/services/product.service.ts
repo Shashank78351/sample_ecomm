@@ -55,8 +55,7 @@ export class ProductService {
     if (priceCondition && priceValue!==undefined) {
       params = params.append('priceCondition', priceCondition);
       params = params.append('priceValue', priceValue.toString());
-
     }
     return this.http.get<Product[]>(`${this.apiUrl}`, { params });
-  }       
+  }  
 }

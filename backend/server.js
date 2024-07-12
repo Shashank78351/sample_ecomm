@@ -4,10 +4,13 @@ const db = require('./db');
 const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || 3002;
+const bcrypt=require('bcrypt');
+const jwt=require('jsonwebtoken');
 
 app.use(cors());
 app.use(express.json());
 
+const JWT_SECRET ="ks@#2024";
  
 // User registration
 app.post('/signup', async (req, res) => {
@@ -101,7 +104,7 @@ app.get('/products', (req, res) => {
 app.get('/productsById/:productId', (req, res) => {
   const productId = req.params.productId;
    
-    db.query('SELECT productId, productName, productPrice FROM products WHERE productId = ?', [productId], (error, rows) => {
+    db.query('SELECT productId, productName, productPrice,productImage FROM products WHERE productId = ?', [productId], (error, rows) => {
       if (error) {
         console.error('Database query error:', error);
         return res.status(500).json({ message: 'Server error' });
@@ -117,17 +120,17 @@ app.get('/productsById/:productId', (req, res) => {
   app.get('/addToCart/:productId', (req, res) => {
     const productId = req.params.productId;
  
-    db.query('SELECT productName, productPrice FROM products WHERE productId = ?', [productId], (error, rows) => {
+    db.query('SELECT productName, productPrice, productImage FROM products WHERE productId = ?', [productId], (error, rows) => {
         if (error) {
             console.error('Database query error:', error);
             return res.status(500).json({ message: 'Server error' });
         }
  
         if (rows.length > 0) {
-            const { productName, productPrice } = rows[0];
+            const { productName, productPrice,productImage } = rows[0];
  
             // Check if the product already exists in the cart
-            db.query('SELECT * FROM cart WHERE name = ? AND price = ?', [productName, productPrice], (err, cartRows) => {
+            db.query('SELECT * FROM cart WHERE name = ? AND price = ? AND image=?', [productName, productPrice,productImage], (err, cartRows) => {
                 if (err) {
                     console.error('Database query error:', err);
                     return res.status(500).json({ message: 'Server error' });
@@ -135,7 +138,7 @@ app.get('/productsById/:productId', (req, res) => {
  
                 if (cartRows.length > 0) {
                     // Product already exists in cart, increment quantity
-                    db.query('UPDATE cart SET quantity = quantity + 1 WHERE name = ? AND price = ?', [productName, productPrice], (updateErr, updateResult) => {
+                    db.query('UPDATE cart SET quantity = quantity + 1 WHERE name = ? AND price = ? AND image = ?', [productName, productPrice, productImage], (updateErr, updateResult) => {
                         if (updateErr) {
                             console.error('Database query error:', updateErr);
                             return res.status(500).json({ message: 'Server error' });
@@ -144,7 +147,7 @@ app.get('/productsById/:productId', (req, res) => {
                     });
                 } else {
                     // Product does not exist in cart, insert with quantity = 1
-                    db.query('INSERT INTO cart (name, price, quantity) VALUES (?, ?, 1)', [productName, productPrice], (insertErr, insertResult) => {
+                    db.query('INSERT INTO cart (name, price,image,quantity) VALUES (?, ?, ?, 1)', [productName, productPrice,productImage], (insertErr, insertResult) => {
                         if (insertErr) {
                             console.error('Database query error:', insertErr);
                             return res.status(500).json({ message: 'Server error' });
@@ -159,7 +162,7 @@ app.get('/productsById/:productId', (req, res) => {
     });
 });
  app.get('/fetchCartItems', (req,res)=>{
-  db.query('SELECT cartId,name, price,quantity FROM cart', (error,rows)=>{
+  db.query('SELECT cartId,name, price,quantity,image FROM cart', (error,rows)=>{
     if(error){
       console.error('Database query error', error);
       return res.status(500).json({message:'Server error'});
@@ -189,6 +192,8 @@ app.post('/confirmOrder', (req, res) => {
     
     const username=req.body.username;
     const email=req.body.email;
+    // const { items } = req.body;
+    
   db.query('SELECT * FROM cart', (error, cartItems) => {
       if (error) {
           console.error('Database query error:', error);
@@ -200,12 +205,12 @@ app.post('/confirmOrder', (req, res) => {
       }
 
       const orderId = new Date().getTime(); // Generate a unique order ID
-    //   const email=req.body.email;
-      
+    
       // Insert each cart item into the orders table
       cartItems.forEach(item => {
-          db.query('INSERT INTO orders (orderId, name, price, quantity,email,username) VALUES (?, ?, ?, ?, ?,?)',
-[orderId, item.name, item.price, item.quantity,email,username], (err, result) => {
+        const totalPrice=item.price * item.quantity;
+          db.query('INSERT INTO orders (orderId, name, price, quantity,totalPrice,email,username,image) VALUES (?, ?, ?,?, ?, ?, ?,?)',
+[orderId, item.name, item.price, item.quantity,totalPrice,email,username,item.image], (err, result) => {
               if (err) {
                   console.error('Insert order query error:', err);
               }
@@ -223,6 +228,7 @@ app.post('/confirmOrder', (req, res) => {
       });
   });
 });
+
 app.get('/orders', (req, res) => {
     const email = req.query.email; // Get the email from query parameters
      

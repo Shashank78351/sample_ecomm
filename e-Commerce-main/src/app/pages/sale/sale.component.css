@@ -48,4 +48,9 @@
     margin-top: 20px;
     color: #333;
   }
+  .cart-item-image{
+    max-width: 100px;
+    height: auto;
+    border-radius: 4px;
+  }
  

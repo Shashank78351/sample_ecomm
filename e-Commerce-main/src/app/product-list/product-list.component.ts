@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { Product } from './product.model';
-
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-product-list',
@@ -21,7 +19,7 @@ priceValue: number | null = null;
 constructor(private productService:ProductService, private router:Router){}
  
 ngOnInit() {
-    console.log("4040");
+    console.log("Fetching products.....");
     this.productService.getProducts().subscribe((products:Product[])=>{
       this.products=products;
     });
@@ -35,10 +33,11 @@ ngOnInit() {
     
   } 
   addToCart(productId: number) {
-    console.log("56 line", productId);
+    console.log("Product Added to cart", productId);
     this.productService.addToCart(productId).subscribe((data: Product[]) => {
       this.cartItems = data;  
     }); 
+    
   }
   getProducts(): void {
     const price=this.priceValue !== null? this.priceValue:undefined;
@@ -72,12 +71,13 @@ ngOnInit() {
     this.getProducts();
   }
   logout(){
-    localStorage.removeItem('username');
+    localStorage.removeItem('email');
     this.router.navigateByUrl('/login');
   }
   viewOrders():void{
     this.router.navigateByUrl('/orders');
   }
+  
 }
 
   

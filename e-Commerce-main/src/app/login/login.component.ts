@@ -20,7 +20,7 @@ export class LoginComponent {
         this.router.navigate(['/products']);
         localStorage.setItem('username',this.username);
         localStorage.setItem('email',this.email);
-        console.log("fgh",localStorage.getItem('username'));
+        console.log("Logged in user",localStorage.getItem('username'));
         alert('Login successful');  
       },
       (error) => {

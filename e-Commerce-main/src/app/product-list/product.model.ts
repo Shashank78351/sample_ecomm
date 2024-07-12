@@ -8,7 +8,8 @@ export interface Product {
     cartId:number;
     name:string;
     price:number;
+    image:string;
     orderId:number;
     userId:number;
-    total:number;
+    totalPrice:number;
    }

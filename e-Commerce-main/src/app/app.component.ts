@@ -15,12 +15,9 @@ export class AppComponent implements OnInit {
   constructor(private router: Router, private productService: ProductService) {}
  
   ngOnInit(): void {
-    // Subscribe to cart items observable
     this.productService.cartItems$.subscribe(items => {
       this.cartItems = items;
     });
- 
-    // Fetch initial cart items
     this.productService.fetchCartItems();
   }
  
