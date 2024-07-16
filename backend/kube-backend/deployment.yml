@@ -23,4 +23,4 @@ spec:
             - containerPort: 3002
           imagePullPolicy: Always
       imagePullSecrets:
-        - name: my-secret-backup
+        - name: deploy
