@@ -23,5 +23,5 @@ spec:
             - containerPort: 80
           imagePullPolicy: Always
       imagePullSecrets:
-        - name: my-secret
+        - name: deploy
 
