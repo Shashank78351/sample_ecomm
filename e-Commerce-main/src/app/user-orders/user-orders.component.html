@@ -5,11 +5,14 @@
         <li *ngFor="let order of orders" class="order-item">
           <div class="order-details">
             <h3>Order ID: {{ order.orderId }}</h3>
+            
             <p>{{ order.name }}</p>
             <p>{{ order.price |currency:'INR':'symbol':'1.2-2':'hi'}}</p>
-            <p>Quantity: {{ order.quantity }}</p>
-            <img [src]="order.image" alt="{{order.name}}" class="order-image">
+            <p>Quantity: {{ order.quantity }}</p>     
             <p>Total:{{order.totalPrice |currency:'INR':'symbol':'1.2-2':'hi'}}</p>
+          </div>
+          <div style="margin: auto">
+            <img [src]="order.image" alt="{{order.name}}" class="order-image">
           </div>
         </li>
       </ul>

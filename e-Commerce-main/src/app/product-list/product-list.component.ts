@@ -19,25 +19,23 @@ priceValue: number | null = null;
 constructor(private productService:ProductService, private router:Router){}
  
 ngOnInit() {
-    console.log("Fetching products.....");
+    console.log("Fetching products..........");
     this.productService.getProducts().subscribe((products:Product[])=>{
       this.products=products;
     });
     this.getProducts();
   }
- 
-  loadProducts() {  
-    this.productService.getProducts().subscribe((data: Product[]) => {
-      this.products = data;
-    });
-    
-  } 
+
   addToCart(productId: number) {
     console.log("Product Added to cart", productId);
-    this.productService.addToCart(productId).subscribe((data: Product[]) => {
-      this.cartItems = data;  
+    this.productService.addToCart(productId).subscribe((items: Product[]) => {
+      this.cartItems = items;  
     }); 
-    
+    this.productService.fetchCartItems();
+     
+  }
+  redirectToSale() {
+    this.router.navigateByUrl("/sale");
   }
   getProducts(): void {
     const price=this.priceValue !== null? this.priceValue:undefined;

@@ -16,7 +16,7 @@ export class ProductService {
   getProduct(productId: number): Observable<Product> {
     return this.http.get<Product>(`http://localhost:3002/productsById/${productId}`);
   }
-
+  
   addToCart(productId: number) : Observable<any>  {
     console.log("Added to the cart",productId);
     return this.http.get<any>(`http://localhost:3002/addToCart/${productId} `);
