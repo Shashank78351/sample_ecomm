@@ -11,6 +11,7 @@ pipeline {
         }
         
         stage('Docker build backend')
+        {
             when { changeset "backend/**"} //Will execute your steps if any file change inside the component_a directory
         steps {
                 dir("backend"){
