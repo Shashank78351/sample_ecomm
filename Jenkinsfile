@@ -10,15 +10,20 @@ pipeline {
             }
         }
         
-        stage('Docker build') 
-        {
-            steps
-            {
+        stage('Docker build backend')
+            when { changeset "backend/**"} //Will execute your steps if any file change inside the component_a directory
+        steps {
                 dir("backend"){
                     sh '''
                     docker build -t linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:latest .
                     '''
                 }
+        }
+        }
+        stage('Docker build e-commerce-main') 
+        {
+            when { changeset "e-Commerce-main/**"} //Will execute your steps if any file change inside the component_a directory
+        steps {
                 sh '''
                 cd e-Commerce-main
                 docker build -t linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:latest .
