@@ -51,7 +51,7 @@ pipeline {
         }
 
         
-    /*stage('Deploy') 
+        stage('Deploy') 
         {
             steps
             {
@@ -68,6 +68,6 @@ pipeline {
                 kubectl apply -f service.yml  
                 """
             }
-        }*/
+        }
     }
 }
