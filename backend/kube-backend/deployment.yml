@@ -2,22 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: e-commerce
-  name: backenddeployment
+  name: backend
   labels:
-    app: e-comm
+    app: backend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: e-comm
+      app: backend
   template:
     metadata:
       labels:
-        app: e-comm
+        app: backend
     spec:
       restartPolicy: Always
       containers:
-        - name: e-comm
+        - name: backend
           image: linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:imagetag
           ports:
             - containerPort: 3002

@@ -2,22 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: e-commerce
-  name: frontenddeployment
+  name: frontend
   labels:
-    app: e-comm
+    app: frontend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: e-comm
+      app: frontend
   template:
     metadata:
       labels:
-        app: e-comm
+        app: frontend
     spec:
       restartPolicy: Always
       containers:
-        - name: e-comm
+        - name: frontend
           image: linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:imagetag
           ports:
             - containerPort: 80
