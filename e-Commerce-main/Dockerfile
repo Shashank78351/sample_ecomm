@@ -15,7 +15,7 @@ COPY . .
 # COPY ./backend .
 
 # Build the Angular application
-RUN npm run build --configuration=production
+RUN npm run build
 
 # Stage 2: Serve App with Node.js
 FROM node:18

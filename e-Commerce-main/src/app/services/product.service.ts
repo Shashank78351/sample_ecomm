@@ -7,7 +7,7 @@ import { Product } from '../product-list/product.model';
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'http://backend-svc';
+  private apiUrl = '/backend';
   public cartAddedSubject = new BehaviorSubject<Product[]>([]);
   cartItems$=this.cartAddedSubject.asObservable();
   
