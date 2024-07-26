@@ -7,13 +7,7 @@ metadata:
     app: frontend
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: frontend
   template:
-    metadata:
-      labels:
-        app: frontend
     spec:
       restartPolicy: Always
       containers:
@@ -24,4 +18,3 @@ spec:
           imagePullPolicy: Always
       imagePullSecrets:
         - name: deploy
-

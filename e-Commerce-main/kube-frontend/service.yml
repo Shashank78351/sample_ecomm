@@ -3,8 +3,6 @@ kind: Service
 metadata:
   namespace: e-commerce
   name: frontend-svc
-  labels:
-    app: frontend
 spec:
   selector:
     app: frontend
