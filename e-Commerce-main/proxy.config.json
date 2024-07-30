@@ -2,6 +2,9 @@
     "/backend":{
         "target": "http://backend-svc/",
         "secure": false,
-        "changeOrigin": true
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/backend": ""
+        }
     }
 }
