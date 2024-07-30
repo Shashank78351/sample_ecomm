@@ -1,6 +1,7 @@
 {
     "/backend":{
         "target": "http://backend-svc/",
-        "secure": false
+        "secure": false,
+        "changeOrigin": true
     }
 }
