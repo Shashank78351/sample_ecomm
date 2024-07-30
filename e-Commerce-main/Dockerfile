@@ -33,4 +33,4 @@ COPY --from=build /app/dist/ecommerce /app
 EXPOSE 80
 
 # Start the application
-CMD ["http-server", "/app", "-p", "80", "--proxy", "http://localhost:8080?"]
+CMD ["http-server", "/app", "-p", "80", "--proxy", "http://localhost:80?"]
