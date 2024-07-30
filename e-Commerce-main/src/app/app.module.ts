@@ -13,6 +13,7 @@ import { UserOrdersComponent } from './user-orders/user-orders.component';
 import { registerLocaleData } from '@angular/common';
 import localeHi from '@angular/common/locales/hi';
 registerLocaleData(localeHi,'hi');
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 
 @NgModule({
@@ -31,7 +32,10 @@ registerLocaleData(localeHi,'hi');
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [{
+    provide: LocationStrategy,
+    useClass: PathLocationStrategy
+ }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
