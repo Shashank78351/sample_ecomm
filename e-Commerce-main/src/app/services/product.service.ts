@@ -7,7 +7,7 @@ import { Product } from '../product-list/product.model';
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = '/backend';
+  private apiUrl = 'http://172.174.141.97:32000';
   public cartAddedSubject = new BehaviorSubject<Product[]>([]);
   cartItems$=this.cartAddedSubject.asObservable();
   
