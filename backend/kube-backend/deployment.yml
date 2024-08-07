@@ -20,7 +20,7 @@ spec:
         - name: backend
           image: linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:imagetag
           ports:
-            - containerPort: 80
+            - containerPort: 3000
           imagePullPolicy: Always
       imagePullSecrets:
         - name: deploy

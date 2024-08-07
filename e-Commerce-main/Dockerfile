@@ -1,36 +1,29 @@
-# Stage 1: Build Angular App
-FROM node:18 AS build
-
-# Set the working directory to the root of the Angular project
-WORKDIR /app
-
-# Install Angular CLI globally
-# RUN npm install -g @angular/cli
-
-COPY package*.json ./
-RUN npm install
-COPY . .
-
-# Copy the rest of the application files
-# COPY ./backend .
-
-# Build the Angular application
-RUN npm run build
-
-# Stage 2: Serve App with Node.js
-FROM node:18
-
+# Use the official Node.js image as the base image
+FROM node:14-alpine AS builder
+ 
 # Set the working directory
 WORKDIR /app
-
-# Install serve globally to serve the Angular app
-RUN npm install -g http-server
-
-# Copy the build output from the previous stage
-COPY --from=build /app/dist/ecommerce /app
-
-# Expose the port the app runs on
+ 
+# Copy the package.json and package-lock.json files
+COPY package*.json ./
+ 
+# Install dependencies
+RUN npm install
+ 
+# Copy the rest of the application code
+COPY . .
+ 
+# Build the Angular application
+RUN npm run build --prod
+ 
+# Use a smaller base image for the final image
+FROM nginx:alpine
+ 
+# Copy the built Angular artifacts from the builder stage
+COPY --from=builder /app/dist/ecommerce /usr/share/nginx/html
+ 
+# Expose the port that the Nginx server will listen on
 EXPOSE 80
-
-# Start the application
-CMD ["http-server", "/app", "-p", "80", "--proxy", "http://localhost:80?"]
+ 
+# Start the Nginx server
+CMD ["nginx", "-g", "daemon off;"]
