@@ -1,6 +1,6 @@
 var mysql = require('mysql2');
 var connection = mysql.createConnection({
-    host  : 'mysql',
+    host  : 'mysql-service',
     database:'ecommerce',
     user:'myuser',
     password:'admin#123',
