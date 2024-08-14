@@ -16,7 +16,7 @@ pipeline {
         steps {
                 dir("backend"){
                     sh '''
-                    docker build -t linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:latest .
+                    docker build -t linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:${env.BUILD_NUMBER}  .
                     '''
                 }
         }
@@ -27,7 +27,7 @@ pipeline {
         steps {
                 sh '''
                 cd e-Commerce-main
-                docker build -t linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:latest .
+                docker build -t linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:${env.BUILD_NUMBER}  .
                 '''
             }
         }
