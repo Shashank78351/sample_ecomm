@@ -12,7 +12,7 @@ pipeline {
         
         stage('Docker build backend')
         {
-            // when { changeset "backend/**"} //Will execute your steps if any file change inside the component_a directory
+            when { changeset "backend/**"} //Will execute your steps if any file change inside the component_a directory
         steps {
                 dir("backend"){
                     sh '''
@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Docker build e-commerce-main') 
         {
-            // when { changeset "e-Commerce-main/**"} //Will execute your steps if any file change inside the component_a directory
+            when { changeset "e-Commerce-main/**"} //Will execute your steps if any file change inside the component_a directory
         steps {
                 sh '''
                 cd e-Commerce-main
