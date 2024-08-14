@@ -13,23 +13,23 @@ pipeline {
         stage('Docker build backend')
         {
             when { changeset "backend/**"} //Will execute your steps if any file change inside the component_a directory
-        steps {
-                dir("backend"){
-                    sh '''
-                    docker build -t linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:${env.BUILD_NUMBER}  .
-                    '''
-                }
-        }
+            steps {
+                    dir("backend"){
+                        sh '''
+                        docker build -t linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:latest .
+                        '''
+                    }
+            }
         }
         stage('Docker build e-commerce-main') 
         {
             when { changeset "e-Commerce-main/**"} //Will execute your steps if any file change inside the component_a directory
-        steps {
-                sh '''
-                cd e-Commerce-main
-                docker build -t linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:${env.BUILD_NUMBER}  .
-                '''
-            }
+            steps {
+                    sh '''
+                    cd e-Commerce-main
+                    docker build -t linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:latest .
+                    '''
+                }
         }
 
         stage('Publish')
@@ -39,8 +39,8 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'gitlab', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                         sh """
                             docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD} linuxappvm.eastus.cloudapp.azure.com:5050
-                            docker tag linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:${env.BUILD_NUMBER} linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:latest 
-                            docker tag linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:${env.BUILD_NUMBER} linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:latest
+                            docker tag linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:latest linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:${env.BUILD_NUMBER} 
+                            docker tag linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:latest linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:${env.BUILD_NUMBER}
                             docker push --all-tags linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend
                             docker push --all-tags linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend
                         
