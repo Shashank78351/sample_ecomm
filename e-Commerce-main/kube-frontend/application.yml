@@ -1,0 +1,23 @@
+apiVersion: argoproject.io/v1alpha1
+kind: Application
+metadata:
+  name: frontend-argo-application
+  namespace: argocd
+spec: 
+  project: default
+
+  source:
+    path: e-Commerce-main/kube-frontend
+    repoURL: 'https://linuxappvm.eastus.cloudapp.azure.com/root/e-comm-app.git'
+    targetRevision: HEAD
+  destination:
+    namespace: frontend
+    server: 'https://kubernetes.default.svc'
+
+  syncPolicy:
+    syncOptions: 
+    - CreateNamespace=true
+
+    automated: 
+      selfheal: true
+        
