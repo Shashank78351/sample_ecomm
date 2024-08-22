@@ -58,7 +58,7 @@ pipeline {
                        
                         git config user.name "root"
                         BUILD_NUMBER=${env.BUILD_NUMBER}
-                        sed -i "s+frontend:imagetag.*+frontend:${BUILD_NUMBER}+g" kube-frontend/deployment.yml 
+                        sed -i "s+e-comm-app/frontend.*+e-comm-app/frontend:${BUILD_NUMBER}+g" kube-frontend/deployment.yml 
                         cat kube-frontend/deployment.yml
                         git add .
                         git status
