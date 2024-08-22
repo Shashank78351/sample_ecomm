@@ -58,12 +58,12 @@ pipeline {
                        
                         git config user.name "root"
                         BUILD_NUMBER=${env.BUILD_NUMBER}
-                        sed -i "s+frontend/imagetag.*+frontend/imagetag:${BUILD_NUMBER}+g" deployment.yml 
-                        cat deployment.yml
+                        sed -i "s+frontend/imagetag.*+frontend/imagetag:${BUILD_NUMBER}+g" kube-frontend/deployment.yml 
+                        cat kube-frontend/deployment.yml
                         git add .
                         git status
                         git commit -m "update deployment image to version ${BUILD_NUMBER}"
-                        git push https://glpat-rJj7s2J_wpFnKWxW5sMt@gitlab.com/root/e-comm-app HEAD:main
+                        git push https://glpat-rJj7s2J_wpFnKWxW5sMt@gitlab.com/root/e-comm-appe-Commerce-main HEAD:main
 
                     """
                 }
