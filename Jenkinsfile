@@ -48,23 +48,26 @@ pipeline {
                     }
                 }
             }
-        }
+        }   
 
-        
-        stage('Deploy') 
-        {
-            steps
-            {
-                sh """
-                export KUBECONFIG="/var/lib/jenkins/kubeconfig"
-                BUILD_NUMBER=${env.BUILD_NUMBER}
-                cd backend/kube-backend
-                sed -i "s/imagetag/$BUILD_NUMBER/g" deployment.yml
-                
-                cd ../../e-Commerce-main/kube-frontend
-                sed -i "s/imagetag/$BUILD_NUMBER/g" deployment.yml
-                """
+        stage('updating manifest') {
+
+            steps {
+                withCredentials([gitUsernamePassword(credentialsId: 'Gitlab', gitToolName: 'Default')]) {
+                    sh """
+                       
+                        git config user.name "root"
+                        BUILD_NUMBER=${env.BUILD_NUMBER}
+                        sed -i "s+frontend/imagetag.*+frontend/imagetag:${BUILD_NUMBER}+g" deployment.yml 
+                        cat deployment.yml
+                        git add .
+                        git status
+                        git commit -m "update deployment image to version ${BUILD_NUMBER}"
+                        git push https://glpat-rJj7s2J_wpFnKWxW5sMt@gitlab.com/root/e-comm-app HEAD:main
+
+                    """
+                }
             }
-        }
+
     }
 }
