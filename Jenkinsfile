@@ -63,7 +63,7 @@ pipeline {
                         git add .
                         git status
                         git commit -m "update deployment image to version ${BUILD_NUMBER}"
-                        git push https://glpat-rJj7s2J_wpFnKWxW5sMt@gitlab.com/root/e-comm-app/e-Commerce-main HEAD:main
+                        git push https://glpat-rJj7s2J_wpFnKWxW5sMt@linuxappvm.eastus.cloudapp.azure.com//root/e-comm-app/e-Commerce-main HEAD:main
 
                     """
                 }
