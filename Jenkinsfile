@@ -56,6 +56,7 @@ pipeline {
                 withCredentials([gitUsernamePassword(credentialsId: 'Gitlab', gitToolName: 'Default')]) {
                     sh """
                         git clone https://linuxappvm.eastus.cloudapp.azure.com/root/e-comm-app.git
+                        cd e-comm-app
                         git config user.name "root"
                         BUILD_NUMBER=${env.BUILD_NUMBER}
                         sed -i "s+e-comm-app/frontend.*+e-comm-app/frontend:${BUILD_NUMBER}+g" kube-frontend/deployment.yml 
