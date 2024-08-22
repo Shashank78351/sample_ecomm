@@ -55,7 +55,7 @@ pipeline {
             steps {
                 withCredentials([gitUsernamePassword(credentialsId: 'Gitlab', gitToolName: 'Default')]) {
                     sh """
-                        git clone https://glpat-rJj7s2J_wpFnKWxW5sMt@linuxappvm.eastus.cloudapp.azure.com/root/e-comm-app.git
+                        git clone https://glpat-Dq2ZoMtMBm78gTVr14fz@linuxappvm.eastus.cloudapp.azure.com/root/e-comm-app.git
                         cd e-comm-app
                         git config user.name "root"
                         BUILD_NUMBER=${env.BUILD_NUMBER}
@@ -64,7 +64,7 @@ pipeline {
                         git add .
                         git status
                         git commit -m "update deployment image to version ${BUILD_NUMBER}"
-                        git push https://glpat-rJj7s2J_wpFnKWxW5sMt@linuxappvm.eastus.cloudapp.azure.com/root/e-comm-app.git HEAD:main
+                        git push https://glpat-Dq2ZoMtMBm78gTVr14fz@linuxappvm.eastus.cloudapp.azure.com/root/e-comm-app.git HEAD:main
 
                     """
                 }
