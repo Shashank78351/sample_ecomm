@@ -54,6 +54,7 @@ pipeline {
 
            steps
             {
+             withCredentials([gitUsernamePassword(credentialsId: 'Gitlab', gitToolName: 'Default')]) {
                 sh """
                 export KUBECONFIG="/var/lib/jenkins/kubeconfig"
                 BUILD_NUMBER=${env.BUILD_NUMBER}
@@ -62,10 +63,15 @@ pipeline {
                 
                 cd ../../e-Commerce-main/kube-frontend
                 sed -i "s/imagetag/$BUILD_NUMBER/g" deployment.yml
+                git add .
+                git status
+                git commit -m "update deployment image to version ${BUILD_NUMBER}"
+                git push https://glpat-Dq2ZoMtMBm78gTVr14fz@linuxappvm.eastus.cloudapp.azure.com/root/e-comm-app HEAD:main
+
                 """
 
                 }
             }
         }
     }
-
+}
