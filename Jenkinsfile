@@ -52,23 +52,20 @@ pipeline {
 
         stage('updating manifest') {
 
-            steps {
-                withCredentials([gitUsernamePassword(credentialsId: 'Gitlab', gitToolName: 'Default')]) {
-                    sh """
-                        // git clone https://glpat-Dq2ZoMtMBm78gTVr14fz@linuxappvm.eastus.cloudapp.azure.com/root/e-comm-app.git
-                        // cd e-comm-app
-                        git config user.name "root"
-                        BUILD_NUMBER=${env.BUILD_NUMBER}
-                        sed -i "s+e-comm-app/frontend.*+e-comm-app/frontend:${BUILD_NUMBER}+g" kube-frontend/deployment.yml 
-                        cat kube-frontend/deployment.yml
-                        git add .
-                        git status
-                        git commit -m "update deployment image to version ${BUILD_NUMBER}"
-                        git push https://glpat-Dq2ZoMtMBm78gTVr14fz@linuxappvm.eastus.cloudapp.azure.com/root/e-comm-app.git HEAD:main
+           steps
+            {
+                sh """
+                export KUBECONFIG="/var/lib/jenkins/kubeconfig"
+                BUILD_NUMBER=${env.BUILD_NUMBER}
+                cd backend/kube-backend
+                sed -i "s/imagetag/$BUILD_NUMBER/g" deployment.yml
+                
+                cd ../../e-Commerce-main/kube-frontend
+                sed -i "s/imagetag/$BUILD_NUMBER/g" deployment.yml
+                """
 
-                    """
                 }
             }
         }
     }
-}
+
