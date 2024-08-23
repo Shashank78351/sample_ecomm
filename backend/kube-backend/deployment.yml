@@ -18,7 +18,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: backend
-          image: linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:imagetag
+          image: linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:169
           ports:
             - containerPort: 3000
           imagePullPolicy: Always
