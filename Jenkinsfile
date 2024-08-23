@@ -56,8 +56,6 @@ pipeline {
             {
              withCredentials([gitUsernamePassword(credentialsId: 'Gitlab', gitToolName: 'Default')]) {
                 sh """
-
-                git clone https://root:glpat-Dq2ZoMtMBm78gTVr14fz@linuxappvm.eastus.cloudapp.azure.com/root/e-comm-app.git
                 BUILD_NUMBER=${env.BUILD_NUMBER}
                 cd backend/kube-backend
                 sed -i "s/imagetag/$BUILD_NUMBER/g" deployment.yml
