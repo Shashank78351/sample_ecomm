@@ -71,7 +71,7 @@ pipeline {
                 cd ../../e-Commerce-main/kube-frontend
                 sed -i "s/imagetag/$BUILD_NUMBER/g" deployment.yml
                 git checkout main
-                git add ../../backend/kube-backend/deployment.yml ../../e-Commerce-main/kube-frontend/deployment.yml
+                git add backend/kube-backend/deployment.yml e-Commerce-main/kube-frontend/deployment.yml
                 git status
                 git commit -m "update deployment image to version ${BUILD_NUMBER}"
                 git push https://root:glpat-Dq2ZoMtMBm78gTVr14fz@linuxappvm.eastus.cloudapp.azure.com/root/e-comm-app.git HEAD:main
