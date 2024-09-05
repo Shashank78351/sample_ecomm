@@ -1,5 +1,14 @@
 pipeline {
     agent any
+    environment {
+        FLYWAY_URL = 'jdbc:mysql://172.174.141.97:32005/ecommerce'
+        FLYWAY_USER = 'root'
+        FLYWAY_PASSWORD = 'admin#123'
+        FLYWAY_LOCATIONS = 'filesystem:sql/migrations'  // Path to your migration files
+    }
+    tools{
+      flyway 'flyway'
+    }
 
     stages {
         stage('Checkout') 
@@ -69,6 +78,11 @@ pipeline {
                 """
 
                 }
+            }
+        }
+        stage('database migration'){
+            steps{
+                 sh 'flyway -v'
             }
         }
     }
