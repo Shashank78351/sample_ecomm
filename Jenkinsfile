@@ -59,28 +59,28 @@ pipeline {
             }
         }   
 
-        stage('updating manifest') {
+        // stage('updating manifest') {
 
-           steps
-            {
-             withCredentials([gitUsernamePassword(credentialsId: 'Gitlab', gitToolName: 'Default')]) {
-                sh """
-                BUILD_NUMBER=${env.BUILD_NUMBER}
-                cd backend/kube-backend
-                sed -i "s/imagetag/$BUILD_NUMBER/g" deployment.yml
-                cd e-Commerce-main/kube-frontend
-                sed -i "s/imagetag/$BUILD_NUMBER/g" deployment.yml
-                git checkout main
-                git add ../../backend/kube-backend/deployment.yml ../../e-Commerce-main/kube-frontend/deployment.yml
-                git status
-                git commit -m "update deployment image to version ${BUILD_NUMBER}"
-                git push https://root:glpat-Dq2ZoMtMBm78gTVr14fz@linuxappvm.eastus.cloudapp.azure.com/root/e-comm-app.git HEAD:main
+        //    steps
+        //     {
+        //      withCredentials([gitUsernamePassword(credentialsId: 'Gitlab', gitToolName: 'Default')]) {
+        //         sh """
+        //         BUILD_NUMBER=${env.BUILD_NUMBER}
+        //         cd backend/kube-backend
+        //         sed -i "s/imagetag/$BUILD_NUMBER/g" deployment.yml
+        //         cd ../../e-Commerce-main/kube-frontend
+        //         sed -i "s/imagetag/$BUILD_NUMBER/g" deployment.yml
+        //         git checkout main
+        //         git add ../../backend/kube-backend/deployment.yml ../../e-Commerce-main/kube-frontend/deployment.yml
+        //         git status
+        //         git commit -m "update deployment image to version ${BUILD_NUMBER}"
+        //         git push https://root:glpat-Dq2ZoMtMBm78gTVr14fz@linuxappvm.eastus.cloudapp.azure.com/root/e-comm-app.git HEAD:main
 
-                """
+        //         """
 
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
         stage('database migration'){
             steps{
                  sh 'flyway -v'
