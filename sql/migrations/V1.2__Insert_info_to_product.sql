@@ -1,0 +1,1 @@
+insert into products ( productName, productDescription, productImage, productPrice,category) values('Ethnic wear','https://file.theethnicworld.com/image/450/Light-Yellow-Colour-1642-Wedding-Mens-Wear-Art-Silk-Sherwani-Suppliers-In-India-2804.jpg',2800 ,'Mens');
