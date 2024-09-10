@@ -8,7 +8,7 @@ CREATE TABLE orders (
  
     quantity INT NOT NULL ,
  
-    totalPrice DECIMAL(10, 2) NOT NULL,
+    totalPrice DECIMAL(15, 2) NOT NULL,
  
     username VARCHAR(255),
  
