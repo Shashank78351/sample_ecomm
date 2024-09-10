@@ -14,7 +14,7 @@ CREATE TABLE orders (
  
     email VARCHAR(255),
  
-    image varchar(255)
+    -- image varchar(255)
  
 );
 
