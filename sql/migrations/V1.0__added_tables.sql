@@ -12,9 +12,9 @@ CREATE TABLE orders (
  
     username VARCHAR(255),
  
-    email VARCHAR(255)
+    email VARCHAR(255),
  
-    --image varchar(255)
+    image varchar(255)
  
 );
 
