@@ -93,7 +93,6 @@ pipeline {
                     )
 
                     if (migrateStatus != 0) {
-                        // If migration fails, run Flyway repair and retry migration
                         echo "Migration failed, running Flyway repair..."
                         sh """
                             flyway -url=${FLYWAY_URL} -user=${FLYWAY_USER} -password=${FLYWAY_PASSWORD} -locations=${FLYWAY_LOCATIONS} repair
