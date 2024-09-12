@@ -85,47 +85,24 @@ pipeline {
         stage('database migration'){
             steps{
                  script{
-                  def migrateStatus = sh(
+                   def migrateStatus = sh(
                         script: """
                             flyway -url=${FLYWAY_URL} -user=${FLYWAY_USER} -password=${FLYWAY_PASSWORD} -locations=${FLYWAY_LOCATIONS} migrate
                         """, 
-                        returnStatus: true // Capture exit status
+                        returnStatus: true
                     )
 
-                    if (migrateStatus != 0) { // Migration failed
-                        echo "Flyway migration failed with status: ${migrateStatus}"
-                        echo "Attempting Flyway repair..."
-
-                        // Run Flyway repair
-                        def repairStatus = sh(
-                            script: """
-                                flyway -url=${FLYWAY_URL} -user=${FLYWAY_USER} -password=${FLYWAY_PASSWORD} -locations=${FLYWAY_LOCATIONS} repair
-                            """, 
-                            returnStatus: true
-                        )
-
-                        if (repairStatus == 0) { // Repair succeeded
-                            echo "Flyway repair succeeded. Retrying migration..."
-
-                            // Re-attempt migration after repair
-                            def retryMigrateStatus = sh(
-                                script: """
-                                    flyway -url=${FLYWAY_URL} -user=${FLYWAY_USER} -password=${FLYWAY_PASSWORD} -locations=${FLYWAY_LOCATIONS} migrate
-                                """, 
-                                returnStatus: true
-                            )
-
-                            if (retryMigrateStatus != 0) {
-                                error "Flyway migration failed again after repair."
-                            } else {
-                                echo "Flyway migration succeeded after repair."
-                            }
-                        } else {
-                            error "Flyway repair failed."
-                        }
-                    } else {
-                        echo "Flyway migration succeeded."
-                       }   }
+                    if (migrateStatus != 0) {
+                        // If migration fails, run Flyway repair and retry migration
+                        echo "Migration failed, running Flyway repair..."
+                        sh """
+                            flyway -url=${FLYWAY_URL} -user=${FLYWAY_USER} -password=${FLYWAY_PASSWORD} -locations=${FLYWAY_LOCATIONS} repair
+                        """
+                        echo "Retrying Flyway migration..."
+                        sh """
+                            flyway -url=${FLYWAY_URL} -user=${FLYWAY_USER} -password=${FLYWAY_PASSWORD} -locations=${FLYWAY_LOCATIONS} migrate
+                        """
+                    }  }
             }
         }
             
