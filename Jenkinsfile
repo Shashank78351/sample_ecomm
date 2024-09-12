@@ -84,14 +84,27 @@ pipeline {
         // }
         stage('database migration'){
             steps{
-             sh """
-              
-             flyway -url=$FLYWAY_URL -user=$FLYWAY_USER -password=$FLYWAY_PASSWORD -locations=$FLYWAY_LOCATIONS migrate
-            
-             flyway -url=$FLYWAY_URL -user=$FLYWAY_USER -password=$FLYWAY_PASSWORD -locations=$FLYWAY_LOCATIONS info
-             """
+                 script {
+                    try {
+                        // Run Flyway migration command
+                        sh '''
+                        flyway -url=$FLYWAY_URL -user=$FLYWAY_USER -password=$FLYWAY_PASSWORD -locations=$FLYWAY_LOCATIONS migrate
+                        '''
+                    } catch (Exception e) {
+                        // If migration fails, log the failure
+                        echo "Flyway migration failed. Attempting to repair..."
+                        currentBuild.result = 'FAILURE'
 
+                        // Run Flyway repair command
+                        sh '''
+                        flyway -url=$FLYWAY_URL -user=$FLYWAY_USER -password=$FLYWAY_PASSWORD -locations=$FLYWAY_LOCATIONS repair
+                        '''
+                    }
+                }
             }
         }
+            
     }
 }
+    
+
