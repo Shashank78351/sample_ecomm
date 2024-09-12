@@ -84,6 +84,7 @@ pipeline {
         // }
         stage('database migration'){
             steps{
+                 script{
                   def migrateStatus = sh(
                         script: """
                             flyway -url=${FLYWAY_URL} -user=${FLYWAY_USER} -password=${FLYWAY_PASSWORD} -locations=${FLYWAY_LOCATIONS} migrate
@@ -128,7 +129,8 @@ pipeline {
             }
         }
             
-    }
+       }   
+       }
 
     
 
