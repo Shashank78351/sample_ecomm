@@ -1,0 +1,27 @@
+namespace: ecomm
+
+app: backend
+
+replicacount: 1
+
+image:
+  repository: linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:169
+  tag: ""
+  restartPolicy: Always
+
+imagePullSecrets: 
+   name: deploy
+
+service:
+  name: backend-svc
+  type: NodePort
+  port: 3000  
+  targetPort: 3000
+  nodePort: 32000
+  protocol: TCP
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80

@@ -1,0 +1,27 @@
+namespace: ecomm
+
+app: frontend
+
+replicacount: 1
+
+image:
+  repository: linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:165
+  tag: ""
+  restartPolicy: Always
+
+imagePullSecrets: 
+   name: my-secret
+
+service:
+  name: frontend-svc
+  type: NodePort
+  port: 30000  
+  targetPort: 80
+  nodePort: 32003
+  protocol: TCP
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
