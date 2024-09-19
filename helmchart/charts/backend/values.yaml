@@ -5,7 +5,7 @@ app: backend
 replicacount: 1
 
 image:
-  repository: linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:169
+  repository: hello-world
   tag: ""
   restartPolicy: Always
 
