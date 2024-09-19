@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: combined-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    # URL to the Git repo or Helm repository containing the chart
+    repoURL: 'https://github.com/Shashank78351/sample_ecomm.git'
+    # Path to the parent chart directory within the repo
+    path: helmchart
+    # The revision/branch of the repo (e.g., HEAD, main, or a specific commit hash)
+    targetRevision: HEAD
+    # Optional: You can specify a specific chart if this is from a Helm repo
+    # chart: "combined-app"
+    # Optional: You can specify version for Helm repositories
+    # targetRevision: 1.0.0
+  destination:
+    # Points to the cluster ArgoCD is managing (use https://kubernetes.default.svc for in-cluster)
+    server: 'https://kubernetes.default.svc'
+    # Namespace to deploy into
+    namespace: ecomm
+  # Auto-syncs and prunes resources
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
