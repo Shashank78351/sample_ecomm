@@ -36,8 +36,8 @@ pipeline {
         stage('Publish') {
             steps {
                 publishDockerImages(
-                    'linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/backend:latest',
-                    'linuxappvm.eastus.cloudapp.azure.com:5050/root/e-comm-app/frontend:latest'
+                    'smr123/ecomm:latest',
+                    'smr123/ecomm:latest'
                 )
             }
         }
