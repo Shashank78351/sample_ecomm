@@ -1,7 +1,8 @@
 frontend:
   replicaCount: 2
   image:
-    repository: frontend
+    repository: frontend-app
+    tag: "v1.0.0"
 
 backend:
   replicaCount: 1
