@@ -3,6 +3,9 @@ frontend:
   image:
     repository: frontend-app
     tag: "v1.0.0"
+    
+imagePullSecrets: 
+   name: deploy
 
 backend:
   replicaCount: 1
